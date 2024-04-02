@@ -1,6 +1,7 @@
 package org.example.midassignment.dao;
 
 import org.example.midassignment.DBConnection;
+import org.example.midassignment.dto.HistoryDTO;
 import org.example.midassignment.dto.WIFIInfoDTO;
 
 import java.sql.*;
@@ -51,4 +52,32 @@ public class WIFIInfoDAO extends DBConnection {
             close(rs, pstmt, conn);
         }
     }
+
+//    public void insertDB(WIFIInfoDTO wifiInfoDTO) {
+//        Connection conn = null;
+//        PreparedStatement pstmt = null;
+//        ResultSet rs = null;
+//
+////        try {
+////            conn = getConnect();
+////
+////            String sql = "INSERT INTO history (lat , lnt , search_date) " +
+////                    "VALUES (?, ?, (SELECT strftime('%Y-%m-%dT%H:%M:%S', 'now', 'localtime')))";
+////
+////            pstmt = conn.prepareStatement(sql);
+////            pstmt.setString(1, historyDTO.getLat());
+////            pstmt.setString(2, historyDTO.getLnt());
+////
+////            int affected = pstmt.executeUpdate();
+////            if (affected > 0) {
+////                System.out.println("DB 저장 성공");
+////            } else {
+////                System.out.println("DB 저장 실패");
+////            }
+////        } catch (SQLException e) {
+////            throw new RuntimeException(e);
+////        } finally {
+////            close(rs, pstmt, conn);
+////        }
+//    }
 }
