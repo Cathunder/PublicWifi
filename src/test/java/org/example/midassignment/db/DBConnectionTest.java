@@ -1,6 +1,7 @@
 package org.example.midassignment.db;
 
 import org.example.midassignment.dao.HistoryDAO;
+import org.example.midassignment.dao.WIFIInfoDAO;
 import org.junit.jupiter.api.Test;
 
 class DBConnectionTest {
@@ -13,5 +14,7 @@ class DBConnectionTest {
 //        dbConnection.DB_update();
 //        dbConnection.DB_delete();
 
+        WIFIInfoDAO wifi = new WIFIInfoDAO();
+        wifi.selectDB();
     }
 }

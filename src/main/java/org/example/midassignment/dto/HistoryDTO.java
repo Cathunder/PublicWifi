@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class HistoryDTO {
     private int id;
-    private double valueX;
-    private double valueY;
+    private String lat;
+    private String lnt;
+    private String searchTime;
 }

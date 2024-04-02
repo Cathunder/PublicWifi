@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class WIFIInfoDTO {
+    private int id;
     private String mgrNo;
     private String wrdOfc;
     private String mainNm;

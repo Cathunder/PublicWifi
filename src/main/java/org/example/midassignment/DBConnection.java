@@ -13,7 +13,11 @@ public class DBConnection {
     }
 
     protected Connection getConnect() {
-        String url = "jdbc:sqlite:/Users/ttekkeollug/Documents/zerobase/과제/중간과제/DB";
+        final String dbPath = "/Users/ttekkeollug/Documents/zerobase/과제/중간과제/MidAssignment";
+        final String fileLocation = dbPath + "/WIFIInfo.db";
+
+        // SQLite connection string
+        String url = "jdbc:sqlite:" + fileLocation;
         Connection connection = null;
 
         try {

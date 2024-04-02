@@ -10,5 +10,7 @@ class OpenApiTest {
     void get() {
         String result = OpenApi.get(1, 2);
         System.out.println(result);
+
+
     }
 }

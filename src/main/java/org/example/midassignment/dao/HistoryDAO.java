@@ -15,7 +15,7 @@ public class HistoryDAO extends DBConnection {
         try {
             conn = getConnect();
 
-            String sql = "SELECT * from History";
+            String sql = "SELECT * from history";
 
             pstmt = conn.prepareStatement(sql);
 
@@ -23,9 +23,9 @@ public class HistoryDAO extends DBConnection {
 
             while (rs.next()) {
                 int id = rs.getInt("id");
-                double x = rs.getDouble("valueX");
-                double y = rs.getDouble("valueY");
-                String date = rs.getString("date");
+                String x = rs.getString("lat");
+                String y = rs.getString("lnt");
+                String date = rs.getString("search_date");
 
                 System.out.println(id + ", " + x + ", " + y + ", " + date);
             }
@@ -44,12 +44,12 @@ public class HistoryDAO extends DBConnection {
         try {
             conn = getConnect();
 
-            String sql = "INSERT INTO History (valueX , valueY , date) " +
+            String sql = "INSERT INTO history (lat , lnt , search_date) " +
                     "VALUES (?, ?, (SELECT strftime('%Y-%m-%dT%H:%M:%S', 'now', 'localtime')))";
 
             pstmt = conn.prepareStatement(sql);
-            pstmt.setDouble(1, historyDTO.getValueX());
-            pstmt.setDouble(2, historyDTO.getValueY());
+            pstmt.setString(1, historyDTO.getLat());
+            pstmt.setString(2, historyDTO.getLnt());
 
             int affected = pstmt.executeUpdate();
             if (affected > 0) {
@@ -70,18 +70,18 @@ public class HistoryDAO extends DBConnection {
         ResultSet rs = null;
 
         int idValue = 3;
-        double y = 111.1111112; // 경도
+        String lnt = "111.1111112"; // 경도
 
         try {
             conn = getConnect();
 
-            String sql = "UPDATE History " +
-                    "SET valueY = ? " +
+            String sql = "UPDATE history " +
+                    "SET lnt = ? " +
                     "WHERE id = ?";
 
             pstmt = conn.prepareStatement(sql);
-            pstmt.setDouble(1, y);
-            pstmt.setDouble(2, idValue);
+            pstmt.setString(1, lnt);
+            pstmt.setInt(2, idValue);
 
             int affected = pstmt.executeUpdate();
             if (affected > 0) {
@@ -104,11 +104,11 @@ public class HistoryDAO extends DBConnection {
         try {
             conn = getConnect();
 
-            String sql = "DELETE FROM History " +
+            String sql = "DELETE FROM history " +
                     "WHERE id = ?";
 
             pstmt = conn.prepareStatement(sql);
-            pstmt.setDouble(1, historyDTO.getId());
+            pstmt.setInt(1, historyDTO.getId());
 
             int affected = pstmt.executeUpdate();
             if (affected > 0) {
