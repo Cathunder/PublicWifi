@@ -1,8 +1,8 @@
-package org.example.midassignment.service;
+package org.example.midassignment;
 
 import java.sql.*;
 
-public class SQLiteConnection {
+public class DBConnection {
 
     static {
         try {
@@ -13,11 +13,6 @@ public class SQLiteConnection {
     }
 
     protected Connection getConnect() {
-
-//        final String dbPath = "/Users/ttekkeollug/Documents/zerobase/과제/중간과제";
-//        final String fileLocation = dbPath + "/DB.db";
-
-        // SQLite connection string
         String url = "jdbc:sqlite:/Users/ttekkeollug/Documents/zerobase/과제/중간과제/DB";
         Connection connection = null;
 

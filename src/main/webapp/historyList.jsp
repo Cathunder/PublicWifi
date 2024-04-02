@@ -25,37 +25,24 @@
         <button>근처 WIFI 정보 가져오기</button>
     </div>
 
-
     <table class="table-list">
         <thead>
             <tr>
-                <th>거리(KM)</th>
-                <th>관리번호</th>
-                <th>자치구</th>
-                <th>와이파이명</th>
-                <th>도로명주소</th>
-                <th>상세주소</th>
-                <th>설치위치(층)</th>
-                <th>설치유형</th>
-                <th>설치기관</th>
-                <th>서비스구분</th>
-                <th>망종류</th>
-                <th>설치년도</th>
-                <th>실내외구분</th>
-                <th>WIFI접속환경</th>
+                <th>ID</th>
                 <th>X좌표</th>
                 <th>Y좌표</th>
-                <th>작업일자</th>
+                <th>조회일자</th>
+                <th>비고</th>
             </tr>
         </thead>
         <tbody>
-<%--        if문 써서 데이터 안가져왔으면 이거
-가져왔으면 데이터 20개 보여주기--%>
-            <td class="td-center" colspan="17">
-                위치 정보를 입력한 후에 조회해 주세요.
+            <td>id내용</td>
+            <td>X좌표내용</td>
+            <td>Y좌표내용</td>
+            <td>조회일자내용</td>
+            <td class="td-center">
+                <button>삭제</button>
             </td>
-
-
         </tbody>
     </table>
 </body>

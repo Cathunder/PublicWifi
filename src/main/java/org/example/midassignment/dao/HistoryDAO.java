@@ -1,10 +1,11 @@
-package org.example.midassignment.service;
+package org.example.midassignment.dao;
 
-import org.example.midassignment.dto.History;
+import org.example.midassignment.DBConnection;
+import org.example.midassignment.dto.HistoryDTO;
 
 import java.sql.*;
 
-public class HistoryService extends SQLiteConnection {
+public class HistoryDAO extends DBConnection {
 
     public void selectDB() {
         Connection conn = null;
@@ -35,7 +36,7 @@ public class HistoryService extends SQLiteConnection {
         }
     }
 
-    public void insertDB(History history) {
+    public void insertDB(HistoryDTO historyDTO) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -47,8 +48,8 @@ public class HistoryService extends SQLiteConnection {
                     "VALUES (?, ?, (SELECT strftime('%Y-%m-%dT%H:%M:%S', 'now', 'localtime')))";
 
             pstmt = conn.prepareStatement(sql);
-            pstmt.setDouble(1, history.getValueX());
-            pstmt.setDouble(2, history.getValueY());
+            pstmt.setDouble(1, historyDTO.getValueX());
+            pstmt.setDouble(2, historyDTO.getValueY());
 
             int affected = pstmt.executeUpdate();
             if (affected > 0) {
@@ -95,7 +96,7 @@ public class HistoryService extends SQLiteConnection {
         }
     }
 
-    public void deleteDB(History history) {
+    public void deleteDB(HistoryDTO historyDTO) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -107,7 +108,7 @@ public class HistoryService extends SQLiteConnection {
                     "WHERE id = ?";
 
             pstmt = conn.prepareStatement(sql);
-            pstmt.setDouble(1, history.getId());
+            pstmt.setDouble(1, historyDTO.getId());
 
             int affected = pstmt.executeUpdate();
             if (affected > 0) {

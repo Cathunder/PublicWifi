@@ -1,13 +1,13 @@
 package org.example.midassignment.db;
 
-import org.example.midassignment.dto.History;
-import org.example.midassignment.service.HistoryService;
+import org.example.midassignment.dto.HistoryDTO;
+import org.example.midassignment.dao.HistoryDAO;
 
 import java.util.Scanner;
 
 public class dbTest {
     public static void main(String[] args) {
-        HistoryService dbc = new HistoryService();
+        HistoryDAO dbc = new HistoryDAO();
 
         Scanner sc = new Scanner(System.in);
 //        System.out.println("x: ");
@@ -17,12 +17,12 @@ public class dbTest {
 
         System.out.println("삭제id값을입력: ");
         int id = Integer.parseInt(sc.nextLine());
-        History history = new History();
-        history.setId(id);
+        HistoryDTO historyDTO = new HistoryDTO();
+        historyDTO.setId(id);
 //        history.setValueX(x);
 //        history.setValueY(y);
 
 //        dbc.insertDB(history);
-        dbc.deleteDB(history);
+        dbc.deleteDB(historyDTO);
     }
 }

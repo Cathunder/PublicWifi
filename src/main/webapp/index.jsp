@@ -15,7 +15,7 @@
         |
         <a href="/historyList.jsp">위치 히스토리 목록</a>
         |
-        <a href="/load-wifi.jsp">Open API 와이파이 정보 가져오기</a>
+        <a href="/loadWIFI.jsp">Open API 와이파이 정보 가져오기</a>
     </div>
 
     <div class="position-info">
@@ -24,7 +24,6 @@
         <button>내 위치 가져오기</button>
         <button>근처 WIFI 정보 가져오기</button>
     </div>
-
 
     <table class="table-list">
         <thead>
