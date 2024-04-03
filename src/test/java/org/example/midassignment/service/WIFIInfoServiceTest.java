@@ -7,11 +7,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class WIFIInfoServiceTest {
 
-    private WIFIInfoDAO wifiInfoDAO;
+    WIFIInfoDAO wifiInfoDAO = new WIFIInfoDAO();
 
     @Test
     void getWIFIInfoJson() {
         WIFIInfoService wifiInfoService = new WIFIInfoService(wifiInfoDAO);
-        wifiInfoService.getWIFIInfoJson();
+        wifiInfoService.getWIFIInfo();
+//        wifiInfoService.getWIFITotalCnt();
     }
 }
