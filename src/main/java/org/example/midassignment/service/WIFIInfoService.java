@@ -25,8 +25,6 @@ public class WIFIInfoService {
 
         try {
             for (int i = 0; i < totalCnt / 1000; i++) {
-
-                // 1~1000, 1001~2000, ...
                 start = i * 1000 + 1;
                 end = (i + 1) * 1000;
 
@@ -46,7 +44,7 @@ public class WIFIInfoService {
                                 .get("TbPublicWifiInfo").getAsJsonObject()
                                 .get("row").getAsJsonArray();
 
-                        wifiInfoDAO.insertDB(jsonArr);
+                        wifiInfoDAO.saveWIFIInfo(jsonArr);
                     }
                 } else {
                     System.out.println("response fail");

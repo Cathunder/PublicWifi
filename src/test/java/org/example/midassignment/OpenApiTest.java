@@ -1,8 +1,7 @@
 package org.example.midassignment;
 
+import org.example.midassignment.temp.OpenApi;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class OpenApiTest {
 

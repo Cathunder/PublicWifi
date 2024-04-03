@@ -1,4 +1,4 @@
-package org.example.midassignment;
+package org.example.midassignment.db;
 
 import java.sql.*;
 
@@ -16,7 +16,6 @@ public class DBConnection {
         final String dbPath = "/Users/ttekkeollug/Documents/zerobase/과제/중간과제/MidAssignment";
         final String fileLocation = dbPath + "/WIFIInfo.db";
 
-        // SQLite connection string
         String url = "jdbc:sqlite:" + fileLocation;
         Connection connection = null;
 

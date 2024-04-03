@@ -2,13 +2,16 @@ package org.example.midassignment.dao;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import org.example.midassignment.DBConnection;
+import org.example.midassignment.db.DBConnection;
+import org.example.midassignment.dto.WIFIInfoDTO;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WIFIInfoDAO extends DBConnection {
 
-    public void selectDB() {
+    public void findAllWIFI() {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -53,7 +56,7 @@ public class WIFIInfoDAO extends DBConnection {
         }
     }
 
-    public void insertDB(JsonArray jsonArray) {
+    public void saveWIFIInfo(JsonArray jsonArray) {
         int batchCnt = 0;
 
         Connection conn = null;
@@ -118,5 +121,60 @@ public class WIFIInfoDAO extends DBConnection {
         } finally {
             close(rs, pstmt, conn);
         }
+    }
+
+    public List<WIFIInfoDTO> findNearestWIFI(String lat, String lnt) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<WIFIInfoDTO> result = new ArrayList<>();
+
+        try {
+            conn = getConnect();
+
+            String sql = "SELECT *, " +
+                    "round(6371*acos(cos(radians(?))*cos(radians(LAT))*cos(radians(LNT) " +
+                    "-radians(?))+sin(radians(?))*sin(radians(LAT))), 4) " +
+                    "AS DISTANCE " +
+                    "FROM WIFIInfo " +
+                    "ORDER BY DISTANCE " +
+                    "LIMIT 20";
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setDouble(1, Double.parseDouble(lat));
+            pstmt.setDouble(2, Double.parseDouble(lnt));
+            pstmt.setDouble(3, Double.parseDouble(lat));
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                WIFIInfoDTO wifiInfoDTO = new WIFIInfoDTO();
+                wifiInfoDTO.setDistance(rs.getDouble("DISTANCE"));
+                wifiInfoDTO.setMgrNo(rs.getString("MGR_NO"));
+                wifiInfoDTO.setWrdOfc(rs.getString("WRDOFC"));
+                wifiInfoDTO.setMainNm(rs.getString("MAIN_NM"));
+                wifiInfoDTO.setAddress1(rs.getString("ADDRESS1"));
+                wifiInfoDTO.setAddress2(rs.getString("ADDRESS2"));
+                wifiInfoDTO.setInstallFloor(rs.getString("INSTALL_FLOOR"));
+                wifiInfoDTO.setInstallTy(rs.getString("INSTALL_TY"));
+                wifiInfoDTO.setInstallMby(rs.getString("INSTALL_MBY"));
+                wifiInfoDTO.setSvcSe(rs.getString("SVC_SE"));
+                wifiInfoDTO.setCmcwr(rs.getString("CMCWR"));
+                wifiInfoDTO.setCnstcYear(rs.getString("CNSTC_YEAR"));
+                wifiInfoDTO.setInOutDooCr(rs.getString("INOUT_DOOR"));
+                wifiInfoDTO.setRemars3(rs.getString("REMARS3"));
+                wifiInfoDTO.setLat(rs.getString("LAT"));
+                wifiInfoDTO.setLnt(rs.getString("LNT"));
+                wifiInfoDTO.setWorkDate(rs.getString("WORKDATE"));
+
+                result.add(wifiInfoDTO);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(rs, pstmt, conn);
+        }
+
+        return result;
     }
 }

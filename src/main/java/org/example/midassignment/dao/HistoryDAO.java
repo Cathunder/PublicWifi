@@ -1,6 +1,6 @@
 package org.example.midassignment.dao;
 
-import org.example.midassignment.DBConnection;
+import org.example.midassignment.db.DBConnection;
 import org.example.midassignment.dto.HistoryDTO;
 
 import java.sql.*;

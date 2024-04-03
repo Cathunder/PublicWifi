@@ -1,3 +1,6 @@
+<%@ page import="org.example.midassignment.dto.WIFIInfoDTO" %>
+<%@ page import="org.example.midassignment.dao.WIFIInfoDAO" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath">${pageContext.request.contextPath}</c:set>
@@ -9,6 +12,11 @@
     <link href="${contextPath}/res/css/main.css" rel="stylesheet"/>
 </head>
 <body>
+    <%
+        String latValue = request.getParameter("lat") == null ? "0.0" : request.getParameter("lat");
+        String lntValue = request.getParameter("lnt") == null ? "0.0" : request.getParameter("lnt");
+    %>
+
     <h1>
         와이파이 정보 구하기
     </h1>
@@ -23,10 +31,11 @@
 
     <div class="position-info">
         <span>LAT:</span>
-        <input type="text" id="latInput" size="20" value="0.0">
+        <input type="text" id="latInput" size="20" value=<%=latValue%>>
         <span>,</span>
         <span>LNT:</span>
-        <input type="text" id="lntInput" size="20" value="0.0">
+        <input type="text" id="lntInput" size="20" value=<%=lntValue%>>
+
         <button id="myPosBtn">내 위치 가져오기</button>
         <button id="nearWIFIInfoBtn">근처 WIFI 정보 가져오기</button>
     </div>
@@ -54,13 +63,48 @@
             </tr>
         </thead>
         <tbody>
-<%--        if문 써서 데이터 안가져왔으면 이거
-가져왔으면 데이터 20개 보여주기--%>
-            <td class="td-center" colspan="17">
-                위치 정보를 입력한 후에 조회해 주세요.
-            </td>
+            <%
+                if (!"0.0".equals(latValue) && !"0.0".equals(lntValue)) {
+                    WIFIInfoDAO wifiInfoDAO = new WIFIInfoDAO();
+                    List<WIFIInfoDTO> list = wifiInfoDAO.findNearestWIFI(latValue, lntValue);
 
-
+                    if (!list.isEmpty()) {
+                        for(WIFIInfoDTO dto : list) {
+            %>
+                            <tr>
+                                <td><%=dto.getDistance()%></td>
+                                <td><%=dto.getMgrNo()%></td>
+                                <td><%=dto.getWrdOfc()%></td>
+                                <td><%=dto.getMainNm()%></td>
+                                <td><%=dto.getAddress1()%></td>
+                                <td><%=dto.getAddress2()%></td>
+                                <td><%=dto.getInstallFloor()%></td>
+                                <td><%=dto.getInstallTy()%></td>
+                                <td><%=dto.getInstallMby()%></td>
+                                <td><%=dto.getSvcSe()%></td>
+                                <td><%=dto.getCmcwr()%></td>
+                                <td><%=dto.getCnstcYear()%></td>
+                                <td><%=dto.getInOutDooCr()%></td>
+                                <td><%=dto.getRemars3()%></td>
+                                <td><%=dto.getLat()%></td>
+                                <td><%=dto.getLnt()%></td>
+                                <td><%=dto.getWorkDate()%></td>
+                            </tr>
+            <%
+                        }
+            %>
+            <%
+                    }
+            %>
+            <%
+                } else {
+            %>
+                <td class="td-center" colspan="17">
+                    위치 정보를 입력한 후에 조회해 주세요.
+                </td>
+            <%
+                }
+            %>
         </tbody>
     </table>
 

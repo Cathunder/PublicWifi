@@ -15,6 +15,6 @@ class DBConnectionTest {
 //        dbConnection.DB_delete();
 
         WIFIInfoDAO wifi = new WIFIInfoDAO();
-        wifi.selectDB();
+        wifi.findAllWIFI();
     }
 }

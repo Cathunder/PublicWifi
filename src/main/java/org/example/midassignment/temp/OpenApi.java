@@ -1,4 +1,4 @@
-package org.example.midassignment;
+package org.example.midassignment.temp;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
