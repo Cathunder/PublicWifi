@@ -1,5 +1,6 @@
 package org.example.midassignment.dao;
 
+import com.google.gson.JsonArray;
 import org.example.midassignment.DBConnection;
 import org.example.midassignment.dto.HistoryDTO;
 import org.example.midassignment.dto.WIFIInfoDTO;
@@ -53,31 +54,36 @@ public class WIFIInfoDAO extends DBConnection {
         }
     }
 
-//    public void insertDB(WIFIInfoDTO wifiInfoDTO) {
-//        Connection conn = null;
-//        PreparedStatement pstmt = null;
-//        ResultSet rs = null;
-//
-////        try {
-////            conn = getConnect();
-////
-////            String sql = "INSERT INTO history (lat , lnt , search_date) " +
-////                    "VALUES (?, ?, (SELECT strftime('%Y-%m-%dT%H:%M:%S', 'now', 'localtime')))";
-////
-////            pstmt = conn.prepareStatement(sql);
-////            pstmt.setString(1, historyDTO.getLat());
-////            pstmt.setString(2, historyDTO.getLnt());
-////
-////            int affected = pstmt.executeUpdate();
-////            if (affected > 0) {
-////                System.out.println("DB 저장 성공");
-////            } else {
-////                System.out.println("DB 저장 실패");
-////            }
-////        } catch (SQLException e) {
-////            throw new RuntimeException(e);
-////        } finally {
-////            close(rs, pstmt, conn);
-////        }
-//    }
+    public void insertDB(JsonArray jsonArray) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = getConnect();
+
+            String sql = "INSERT INTO WIFIInfo (" +
+                    "MGR_NO, WRDOFC, MAIN_NM, ADDRESS1, ADDRESS2, " +
+                    "INSTALL_FLOOR, INSTALL_TY, INSTALL_MBY, SVC_SE, CMCWR, " +
+                    "CNSTC_YEAR, INOUT_DOOR, REMARS3, LAT, LNT, WORKDATE" +
+                    ") " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            pstmt = conn.prepareStatement(sql);
+
+//            pstmt.setString(1, );
+//            pstmt.setString(2, );
+
+            int affected = pstmt.executeUpdate();
+            if (affected > 0) {
+                System.out.println("DB 저장 성공");
+            } else {
+                System.out.println("DB 저장 실패");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(rs, pstmt, conn);
+        }
+    }
 }
