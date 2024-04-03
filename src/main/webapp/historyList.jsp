@@ -1,9 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath">${pageContext.request.contextPath}</c:set>
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>와이파이 정보 구하기</title>
-    <link href="/res/css/main.css" rel="stylesheet"/>
+    <link href="${contextPath}/res/css/main.css" rel="stylesheet"/>
 </head>
 <body>
     <h1>
@@ -11,11 +14,11 @@
     </h1>
 
     <div class="api-action">
-        <a href="/">홈</a>
+        <a href="${contextPath}/">홈</a>
         |
-        <a href="/historyList.jsp">위치 히스토리 목록</a>
+        <a href="${contextPath}/historyList.jsp">위치 히스토리 목록</a>
         |
-        <a href="/load-wifi.jsp">Open API 와이파이 정보 가져오기</a>
+        <a href="${contextPath}/loadWIFI.jsp">Open API 와이파이 정보 가져오기</a>
     </div>
 
     <div class="position-info">
