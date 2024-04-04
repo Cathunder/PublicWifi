@@ -4,39 +4,46 @@ import org.example.midassignment.db.DBConnection;
 import org.example.midassignment.dto.HistoryDTO;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HistoryDAO extends DBConnection {
 
-    public void selectDB() {
+    public List<HistoryDTO> findAllHistory() {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+        List<HistoryDTO> result = new ArrayList<>();
 
         try {
             conn = getConnect();
 
-            String sql = "SELECT * from history";
+            String sql = "SELECT * from history " +
+                    "ORDER BY id DESC;";
 
             pstmt = conn.prepareStatement(sql);
 
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String x = rs.getString("lat");
-                String y = rs.getString("lnt");
-                String date = rs.getString("search_date");
+                HistoryDTO historyDTO = new HistoryDTO();
+                historyDTO.setId(rs.getInt("id"));
+                historyDTO.setLat(rs.getString("lat"));
+                historyDTO.setLnt(rs.getString("lnt"));
+                historyDTO.setSearchTime(rs.getString("search_date"));
 
-                System.out.println(id + ", " + x + ", " + y + ", " + date);
+                result.add(historyDTO);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             close(rs, pstmt, conn);
         }
+
+        return result;
     }
 
-    public void insertDB(HistoryDTO historyDTO) {
+    public void saveHistory(String lat, String lnt) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -44,19 +51,15 @@ public class HistoryDAO extends DBConnection {
         try {
             conn = getConnect();
 
-            String sql = "INSERT INTO history (lat , lnt , search_date) " +
+            String sql = "INSERT INTO history (lat, lnt, search_date) " +
                     "VALUES (?, ?, (SELECT strftime('%Y-%m-%dT%H:%M:%S', 'now', 'localtime')))";
 
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, historyDTO.getLat());
-            pstmt.setString(2, historyDTO.getLnt());
+            pstmt.setString(1, lat);
+            pstmt.setString(2, lnt);
 
-            int affected = pstmt.executeUpdate();
-            if (affected > 0) {
-                System.out.println("DB 저장 성공");
-            } else {
-                System.out.println("DB 저장 실패");
-            }
+            pstmt.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -64,39 +67,7 @@ public class HistoryDAO extends DBConnection {
         }
     }
 
-    public void updateDB() {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-
-        int idValue = 3;
-        String lnt = "111.1111112"; // 경도
-
-        try {
-            conn = getConnect();
-
-            String sql = "UPDATE history " +
-                    "SET lnt = ? " +
-                    "WHERE id = ?";
-
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, lnt);
-            pstmt.setInt(2, idValue);
-
-            int affected = pstmt.executeUpdate();
-            if (affected > 0) {
-                System.out.println("DB 수정 성공");
-            } else {
-                System.out.println("DB 수정 실패");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            close(rs, pstmt, conn);
-        }
-    }
-
-    public void deleteDB(HistoryDTO historyDTO) {
+    public void deleteHistory(String idValue) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -108,14 +79,10 @@ public class HistoryDAO extends DBConnection {
                     "WHERE id = ?";
 
             pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, historyDTO.getId());
+            pstmt.setInt(1, Integer.parseInt(idValue));
 
-            int affected = pstmt.executeUpdate();
-            if (affected > 0) {
-                System.out.println("DB 삭제 성공");
-            } else {
-                System.out.println("DB 삭제 실패");
-            }
+            pstmt.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

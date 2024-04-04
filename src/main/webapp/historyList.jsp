@@ -1,3 +1,6 @@
+<%@ page import="org.example.midassignment.dao.HistoryDAO" %>
+<%@ page import="org.example.midassignment.dto.HistoryDTO" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath">${pageContext.request.contextPath}</c:set>
@@ -7,6 +10,7 @@
 <head>
     <title>와이파이 정보 구하기</title>
     <link href="${contextPath}/res/css/main.css" rel="stylesheet"/>
+    <script src="<c:url value="/webjars/jquery/3.7.1/jquery.min.js" />"></script>
 </head>
 <body>
     <h1>
@@ -21,13 +25,6 @@
         <a href="${contextPath}/loadWIFI.jsp">Open API 와이파이 정보 가져오기</a>
     </div>
 
-    <div class="position-info">
-        LAT: <input type="text" size="20">,
-        LNT: <input type="text" size="20">
-        <button>내 위치 가져오기</button>
-        <button>근처 WIFI 정보 가져오기</button>
-    </div>
-
     <table class="table-list">
         <thead>
             <tr>
@@ -39,14 +36,43 @@
             </tr>
         </thead>
         <tbody>
-            <td>id내용</td>
-            <td>X좌표내용</td>
-            <td>Y좌표내용</td>
-            <td>조회일자내용</td>
-            <td class="td-center">
-                <button>삭제</button>
-            </td>
+            <%
+                HistoryDAO historyDAO = new HistoryDAO();
+
+                String idValue = request.getParameter("ID");
+                if (idValue != null) {
+                    historyDAO.deleteHistory(idValue);
+                }
+
+                List<HistoryDTO> list = historyDAO.findAllHistory();
+
+                if (list.isEmpty()) {
+            %>
+                    <tr>
+                        <td class="td-center" colspan="5">
+                            저장된 위치 기록이 없습니다.
+                        </td>
+                    </tr>
+            <%
+                } else {
+                    for(HistoryDTO dto : list) {
+            %>
+                        <tr>
+                            <td><%=dto.getId()%></td>
+                            <td><%=dto.getLat()%></td>
+                            <td><%=dto.getLnt()%></td>
+                            <td><%=dto.getSearchTime()%></td>
+                            <td class="td-center">
+                                <button class="deleteBtn">삭제</button>
+                            </td>
+                        </tr>
+            <%
+                    }
+                }
+            %>
         </tbody>
     </table>
+
+    <script src="${contextPath}/res/js/historyList.js"></script>
 </body>
 </html>

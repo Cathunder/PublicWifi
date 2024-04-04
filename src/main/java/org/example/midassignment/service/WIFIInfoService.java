@@ -44,7 +44,7 @@ public class WIFIInfoService {
                                 .get("TbPublicWifiInfo").getAsJsonObject()
                                 .get("row").getAsJsonArray();
 
-                        wifiInfoDAO.saveWIFIInfo(jsonArr);
+                        wifiInfoDAO.saveAllWIFI(jsonArr);
                     }
                 } else {
                     System.out.println("response fail");

@@ -9,12 +9,12 @@ class DBConnectionTest {
     @Test
     void select() {
         HistoryDAO dbConnection = new HistoryDAO();
-        dbConnection.selectDB();
+//        dbConnection.findAllHistory();
 //        dbConnection.DB_insert();
 //        dbConnection.DB_update();
 //        dbConnection.DB_delete();
 
-        WIFIInfoDAO wifi = new WIFIInfoDAO();
-        wifi.findAllWIFI();
+//        WIFIInfoDAO wifi = new WIFIInfoDAO();
+//        wifi.findAllWIFI();
     }
 }

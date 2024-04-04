@@ -18,5 +18,5 @@ function error(error) {
 }
 
 nearBtn.addEventListener("click", function() {
-    window.location.assign("http://localhost:8080/?lat=" + lat.value + "&lnt=" + lnt.value);
+    window.location = "http://localhost:8080/?lat=" + lat.value + "&lnt=" + lnt.value;
 });
