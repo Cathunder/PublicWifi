@@ -11,9 +11,8 @@ import java.util.List;
 
 public class WIFIInfoDAO extends DBConnection {
 
+    // wifi 데이터 모두 저장하기
     public void saveAllWIFI(JsonArray jsonArray) {
-        int batchCnt = 0;
-
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -53,11 +52,10 @@ public class WIFIInfoDAO extends DBConnection {
                 pstmt.setString(16, wifiInfo.get("WORK_DTTM").getAsString());
 
                 pstmt.addBatch();
-                batchCnt++;
-
                 pstmt.clearParameters();
 
-                if (batchCnt % 1000 == 0) {
+                int remain = (i + 1) % 1000;
+                if (remain == 0) {
                     pstmt.executeBatch();
                     pstmt.clearBatch();
                     conn.commit();
@@ -78,6 +76,7 @@ public class WIFIInfoDAO extends DBConnection {
         }
     }
 
+    // 내 위치와 가까운 와이파이 정보 20개 찾기
     public List<WIFIInfoDTO> findNearestWIFI(String lat, String lnt) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -130,7 +129,7 @@ public class WIFIInfoDAO extends DBConnection {
             close(rs, pstmt, conn);
         }
 
-        // 위치 히스토리 목록 추가
+        // 위치 히스토리 목록에 검색한 위치값 추가
         HistoryDAO historyDAO = new HistoryDAO();
         historyDAO.saveHistory(lat, lnt);
 

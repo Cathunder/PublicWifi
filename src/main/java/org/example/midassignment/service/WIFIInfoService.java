@@ -24,7 +24,7 @@ public class WIFIInfoService {
         int end = 1;
 
         try {
-            for (int i = 0; i < totalCnt / 1000; i++) {
+            for (int i = 0; i <= totalCnt / 1000; i++) {
                 start = i * 1000 + 1;
                 end = (i + 1) * 1000;
 

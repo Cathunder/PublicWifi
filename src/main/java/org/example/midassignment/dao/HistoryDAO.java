@@ -9,6 +9,7 @@ import java.util.List;
 
 public class HistoryDAO extends DBConnection {
 
+    // 히스토리 데이터 모두 불러오기
     public List<HistoryDTO> findAllHistory() {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -43,6 +44,7 @@ public class HistoryDAO extends DBConnection {
         return result;
     }
 
+    // 히스토리 저장
     public void saveHistory(String lat, String lnt) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -67,6 +69,7 @@ public class HistoryDAO extends DBConnection {
         }
     }
 
+    // 히스토리 데이터 1개 삭제
     public void deleteHistory(String idValue) {
         Connection conn = null;
         PreparedStatement pstmt = null;
